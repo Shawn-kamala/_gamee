@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spill It: Admin's Game Night</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3eeff;--ink:#17102e;--muted:#6a5f8a;--card:#ffffff;--pink:#ff3d8b;--lime:#c6ff3d;--cyan:#28e0ff;--violet:#7b4dff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0820;--ink:#f6f1ff;--muted:#a99fcc;--card:#1a1235}}
+:root[data-theme="dark"]{--bg:#0d0820;--ink:#f6f1ff;--muted:#a99fcc;--card:#1a1235}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;overflow-x:hidden;position:relative}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 10% 5%,rgba(255,61,139,.35),transparent 40%),radial-gradient(circle at 95% 30%,rgba(40,224,255,.28),transparent 40%),radial-gradient(circle at 30% 100%,rgba(123,77,255,.4),transparent 45%)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:radial-gradient(rgba(127,100,200,.35) 1px,transparent 1.2px),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .4 0 0 0 0 .7 0 0 0 .3 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");background-size:22px 22px,140px 140px}
+main{position:relative;z-index:1;max-width:440px;margin:0 auto;padding:22px 18px 44px}
+h1,h2{font-family:'Bricolage Grotesque',Georgia,serif;font-weight:800;line-height:1.02;margin:0 0 8px;letter-spacing:-.02em}
+h1{font-size:2.9rem}h2{font-size:1.7rem}
+h1 span{background:linear-gradient(90deg,var(--pink),var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+p.sub{color:var(--muted);margin:0 0 18px}
+.sticker{display:inline-block;background:var(--lime);color:#17102e;font:800 .75rem 'Bricolage Grotesque';padding:5px 11px;border-radius:99px;transform:rotate(-3deg);margin-bottom:12px;border:2px solid #17102e}
+.screen{display:none;animation:in .45s ease}.screen.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(22px) scale(.98)}to{opacity:1;transform:none}}
+.glass{background:var(--card);color:var(--ink);border-radius:24px;padding:20px;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--violet);position:relative}
+label{display:block;font-weight:500;font-size:.85rem;margin:14px 0 6px}
+input[type=text],textarea,select{width:100%;padding:12px 13px;border-radius:14px;border:2px solid var(--ink);background:transparent;font:inherit;color:var(--ink)}
+select option{color:#17102e}
+textarea{min-height:110px;resize:none}
+.chk{display:flex;gap:10px;align-items:center;font-size:.85rem;margin-top:14px}
+.chk input{width:20px;height:20px;accent-color:var(--pink)}
+.btn{display:block;width:100%;margin-top:18px;padding:15px;border:2px solid var(--ink);border-radius:16px;background:var(--pink);color:#fff;font:800 1.05rem 'Bricolage Grotesque',sans-serif;box-shadow:0 5px 0 var(--ink);cursor:pointer;transition:.1s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.btn.alt{background:var(--lime);color:#17102e}
+.btn.ghost{background:transparent;color:var(--ink)}
+.note{font-size:.78rem;color:var(--muted);margin-top:10px;text-align:center}
+.err{color:var(--pink);font-size:.82rem;margin-top:8px;min-height:1em}
+.pick{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -18px;padding:8px 18px 26px;scrollbar-width:none}
+.pick::-webkit-scrollbar{display:none}
+.gcard{flex:0 0 80%;scroll-snap-align:center;border-radius:26px;padding:22px;min-height:310px;border:2px solid var(--ink);box-shadow:0 8px 0 var(--ink);color:#fff;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.gcard::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .35 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
+.c0{background:linear-gradient(155deg,#ff3d8b,#8b2bff)}
+.c1{background:linear-gradient(155deg,#ff6a3d,#d4146a)}
+.c2{background:linear-gradient(155deg,#7b4dff,#2b2bbd)}
+.c3{background:linear-gradient(155deg,#10b6d6,#4a45e0)}
+.c4{background:linear-gradient(155deg,#1faa6b,#0b6e8a)}
+.gcard .em{font-size:3.4rem}
+.gcard h2{margin-top:auto}
+.gcard p{margin:0 0 14px;opacity:.92;font-size:.92rem}
+.gcard button{position:relative;z-index:1;padding:12px;border-radius:14px;border:2px solid #17102e;background:var(--lime);color:#17102e;font:800 1rem 'Bricolage Grotesque',sans-serif;cursor:pointer}
+.gcard button:disabled{background:#ffffff55;color:#fff;border-color:#fff8}
+.dots{text-align:center;color:var(--muted);font-size:.8rem}
+.hud{display:flex;justify-content:space-between;font-weight:500;font-size:.85rem;margin-bottom:14px}
+.deck{position:relative;height:430px;touch-action:pan-y}
+.q{position:absolute;inset:0 0 auto 0;height:400px;transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .35s;display:flex;flex-direction:column;user-select:none}
+.q .tag{align-self:flex-start;font:800 .72rem 'Bricolage Grotesque';padding:4px 10px;border-radius:99px;color:#fff;margin-bottom:10px}
+.q .qt{font:800 1.25rem/1.2 'Bricolage Grotesque',serif;margin-bottom:12px}
+.row{display:flex;gap:10px;margin-top:auto}
+.row button{flex:1;margin:0;padding:12px;font-size:.95rem}
+.fact{background:var(--lime);color:#17102e;transform:rotate(-1.2deg);box-shadow:6px 6px 0 var(--pink)}
+.fact .big{font-size:2.4rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.chip{padding:9px 13px;border-radius:99px;border:2px solid var(--ink);background:transparent;font:500 .9rem 'DM Sans';cursor:pointer;color:var(--ink)}
+.chip.on{background:var(--pink);color:#fff}
+.opt{display:block;width:100%;text-align:left;margin-bottom:9px;padding:11px 13px;border-radius:14px;border:2px solid var(--ink);background:transparent;font:500 .95rem 'DM Sans';color:var(--ink);cursor:pointer}
+.opt.ok{background:var(--lime);color:#17102e}
+.opt.no{background:var(--pink);color:#fff}
+.ticket{background:linear-gradient(135deg,var(--lime),#7dffb3);color:#17102e;border-radius:18px;padding:20px;border:2px dashed #17102e;text-align:center;transform:rotate(-2deg);margin:16px 0 22px;font-weight:500}
+.ticket b{display:block;font:800 2.8rem 'Bricolage Grotesque';margin:4px 0 8px}
+</style></head>
+<body>
+<main>
+
+<section class="screen on" id="s-form">
+  <span class="sticker">18+ ONLY</span>
+  <h1><span>Spill It.</span><br>Admin's Game Night 🎴</h1>
+  <p class="sub">Two rounds of story cards. Swipe, confess, learn something. First, who are you?</p>
+  <div class="glass">
+    <label style="margin-top:0">Your name</label><input type="text" id="f-name" maxlength="40">
+    <label>What do you call Admin?</label><input type="text" id="f-nick" maxlength="40">
+    <label>How do you know Admin?</label>
+    <select id="f-rel"><option value=""></option><option>Friend</option><option>Campus mate</option><option>Family</option><option>Work / Business</option><option>Online only</option><option>Crush 👀</option><option>Saw the status</option></select>
+    <label>What do you know about Admin?</label><textarea id="f-know" style="min-height:76px" maxlength="200"></textarea>
+    <label class="chk"><input type="checkbox" id="f-age"> I'm 18 or older</label>
+    <div class="err" id="f-err"></div>
+    <button class="btn" id="f-send">Continue →</button>
+  </div>
+</section>
+
+<section class="screen" id="s-pick">
+  <span class="sticker" id="p-round"></span>
+  <h2>Pick your deck</h2>
+  <p class="sub">Swipe sideways. Skip any card you don't want to answer.</p>
+  <div class="pick" id="pick"></div>
+  <div class="dots">← swipe →</div>
+</section>
+
+<section class="screen" id="s-play">
+  <div class="hud"><span id="h-game"></span><span id="h-count"></span></div>
+  <div class="deck" id="deck"></div>
+</section>
+
+<section class="screen" id="s-fact">
+  <div class="glass"><h2 id="r-title"></h2><p id="r-msg" style="margin:0;color:var(--muted)"></p></div>
+  <div class="glass fact" style="margin-top:24px"><div class="big">💡</div><h2>Did you know?</h2><p id="fact-t" style="font-size:1.02rem;line-height:1.45;margin:0"></p></div>
+  <button class="btn" id="fact-next">Next →</button>
+</section>
+
+<section class="screen" id="s-end">
+  <span class="sticker">LAST STEP</span>
+  <h2>That's a wrap 🎉</h2>
+  <p class="sub" id="e-score"></p>
+  <div class="glass">
+    <label style="margin-top:0">Who is your favourite music star?</label><input type="text" id="e-music" maxlength="60">
+    <label>What would you like from Admin?</label>
+    <div class="chips" id="chips"></div>
+    <label>Anything else?</label><textarea id="e-more" style="min-height:80px" maxlength="200"></textarea>
+    <button class="btn" id="e-go">Continue →</button>
+  </div>
+</section>
+<section class="screen" id="s-ticket">
+  <span class="sticker">REWARD ROUND</span>
+  <h2>One winner. One ticket. 🎟️</h2>
+  <div class="ticket">GET A CHANCE TO WIN<b>KES 3,000</b>Get all 7 right. Admin questions first, then the hard facts. Good luck.</div>
+  <button class="btn" id="t-go">Try for the prize →</button>
+</section>
+
+<section class="screen" id="s-quiz">
+  <div class="hud"><span>🎟️ KES 3,000 on the line</span><span id="q-count"></span></div>
+  <div class="deck" id="qdeck"></div>
+</section>
+
+<section class="screen" id="s-result">
+  <div class="glass"><h2 id="x-title"></h2><p id="x-msg" style="margin:0;color:var(--muted)"></p></div>
+  <div class="note" style="margin-top:16px">Last step: send your answers to Admin.</div>
+  <button class="btn" id="r-send">Send my answers to Admin 📲</button>
+</section>
+</main>
+
+<script>
+var WA="254701396412";
+var DECKS=[
+ {name:"After-Party Confessions",em:"🔥",desc:"Kisses, chaos and things that happened after the lights went low.",
+  qs:["What is the naughtiest thing you have seen or done at a house party? Spill the details.","Describe the wildest hookup that started at a party.","Who was the last person you kissed at a party, and how did it go?","What is the most embarrassing thing you were caught doing at a party?"],
+  fact:"Sex on the Beach, the peach-and-cranberry party cocktail, is popularly said to have been born in 1987 at a Fort Lauderdale beach bar during Spring Break, as part of a peach schnapps promotion. Bartenders still argue about the exact origin, but the cheeky name is a big reason it spread so fast."},
+ {name:"Bedroom Confessions",em:"💋",desc:"Situationships, spicy moments and things you only tell your besties.",
+  qs:["Describe the weirdest thing that ever happened in the bedroom.","What is the most awkward or funniest thing that happened during an intimate moment?","Describe a situationship that got spicier than it should have.","Describe the best or worst kiss of your life."],
+  fact:"'Honeymoon' has a popular origin story: newlyweds were said to drink mead, a honey wine, for a full moon cycle after the wedding for luck and fertility. Historians debate it, but the link between drinks and early romance goes back centuries."},
+ {name:"Drinks & Bad Decisions",em:"🍺",desc:"Alcohol, substances and the nights you'd rather forget. Skip anything too personal.",
+  qs:["What is your worst experience with alcohol? Describe what happened.","Which drunk text or call to an ex do you regret the most?","Describe your worst experience with drugs or substances. Skip it if it is too personal.","Describe a drunk hookup you regret, or fully do not regret."],
+  fact:"'Dutch courage', the idea that a drink makes you bolder, is commonly traced to English soldiers in 17th-century wars against the Dutch, who were said to sip genever (the ancestor of gin) before battle. Science agrees on half of it: alcohol lowers inhibition but also dulls judgment, which is why 2am texts feel brilliant and look terrible at 8am."},
+ {name:"Dirty Secrets",em:"🙈",desc:"DMs, wrong-person texts and things you hope never get screenshotted.",
+  qs:["Have you ever sent a risky text or pic to the wrong person? What happened?","What is the strangest or creepiest DM you have ever received?","Describe a time you slid into someone's DMs and it went spectacularly wrong.","What is the most embarrassing thing in your search history you would admit to?"],
+  fact:"The word 'aphrodisiac' comes from Aphrodite, the Greek goddess of love. Oysters have the famous reputation, but scientists have found little solid evidence that any food reliably boosts desire. Mostly it is the candlelight and the company."},
+ {name:"Kenyan Gen Z Lore",em:"🇰🇪",desc:"Matatus, hostel nights, celeb crushes and clout crimes.",
+  qs:["Describe your most unforgettable matatu ride, bonus points if there was a stranger crush.","Describe the wildest campus, school or hostel night you lived through.","Which Kenyan celebrity would you shoot your shot at, and what would you say?","Describe your most cringe attempt to impress someone."],
+  fact:"Tusker, first brewed in Nairobi in 1922, is said to be named after the bull elephant that killed brewery co-founder George Hurst on a hunting trip. That is why an elephant is on the label."}
+];
+var st={round:0,played:{},cur:0,deck:null,cards:[],log:[],name:""};
+function $(i){return document.getElementById(i)}
+function show(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('on')});$(id).classList.add('on');window.scrollTo(0,0)}
+function wa(text){var u="https://wa.me/"+WA+"?text="+encodeURIComponent(text);var w=window.open(u,"_blank");if(!w)location.href=u}
+
+$('f-send').onclick=function(){
+  var n=$('f-name').value.trim(),k=$('f-nick').value.trim(),r=$('f-rel').value,x=$('f-know').value.trim();
+  if(!n||!k||!r){$('f-err').textContent="Please fill your name, what you call Admin, and how you know Admin.";return}
+  if(!$('f-age').checked){$('f-err').textContent="This game is for 18 and above only.";return}
+  $('f-err').textContent="";st.name=n;
+  st.nick=k;st.rel=r;st.know=x;startRound();
+};
+
+function startRound(){
+  st.round++;$('p-round').textContent="ROUND "+st.round+" OF 2";
+  var p=$('pick');p.innerHTML="";
+  DECKS.forEach(function(g,i){var d=document.createElement('div');d.className="gcard c"+i;
+    d.innerHTML='<div class="em">'+g.em+'</div><h2>'+g.name+'</h2><p>'+g.desc+'</p>';
+    var b=document.createElement('button');
+    if(st.played[i]){b.textContent="Played ✓";b.disabled=true}else{b.textContent="Play this →";b.onclick=function(){play(i)}}
+    d.appendChild(b);p.appendChild(d)});
+  p.scrollLeft=0;show('s-pick');
+}
+function play(i){
+  var g=DECKS[i];st.deck=i;st.cur=0;st.cards=[];st.played[i]=1;
+  $('h-game').textContent=g.em+" "+g.name;
+  var deck=$('deck');deck.innerHTML="";
+  var cols=["#ff3d8b","#e0456a","#7b4dff","#10a6c6","#1faa6b"];
+  g.qs.forEach(function(q,n){
+    var c=document.createElement('div');c.className="q glass";
+    c.innerHTML='<span class="tag" style="background:'+cols[i]+'">'+g.em+' CARD '+(n+1)+' / '+g.qs.length+'</span><div class="qt"></div>';
+    c.querySelector('.qt').textContent=q;
+    var t=document.createElement('textarea');t.maxLength=300;c.appendChild(t);
+    var r=document.createElement('div');r.className="row";
+    var s=document.createElement('button');s.className="btn ghost";s.textContent="Skip";s.onclick=function(){next()};
+    var nx=document.createElement('button');nx.className="btn";nx.textContent=n==g.qs.length-1?"Done ✓":"Next →";nx.onclick=function(){next()};
+    r.appendChild(s);r.appendChild(nx);c.appendChild(r);
+    deck.appendChild(c);st.cards.push(c);drag(c,n);
+  });
+  layout();show('s-play');
+}
+function layout(){
+  var g=DECKS[st.deck];$('h-count').textContent=Math.min(st.cur+1,g.qs.length)+" of "+g.qs.length;
+  st.cards.forEach(function(c,i){var o=i-st.cur;c.style.pointerEvents=o==0?"auto":"none";
+    if(o<0){c.style.transform="translateX(-130%) rotate(-14deg)";c.style.opacity=0}
+    else if(o==0){c.style.transform="none";c.style.opacity=1;c.style.zIndex=10}
+    else if(o<3){c.style.transform="translateY("+o*14+"px) scale("+(1-o*.05)+") rotate("+(o%2?2:-2)+"deg)";c.style.opacity=1;c.style.zIndex=10-o}
+    else{c.style.opacity=0}
+  });
+}
+function next(){
+  var g=DECKS[st.deck];st.cur++;layout();
+  if(st.cur>=g.qs.length)setTimeout(finish,380);
+}
+function drag(c,i){
+  var sx=0,dx=0,on=false;
+  c.addEventListener('pointerdown',function(e){if(i!==st.cur||/TEXTAREA|BUTTON/.test(e.target.tagName))return;on=true;sx=e.clientX;c.style.transition="none"});
+  window.addEventListener('pointermove',function(e){if(!on)return;dx=e.clientX-sx;c.style.transform="translateX("+dx+"px) rotate("+dx/18+"deg)"});
+  window.addEventListener('pointerup',function(){if(!on)return;on=false;c.style.transition="";if(Math.abs(dx)>90){dx=0;next()}else{dx=0;c.style.transform="none"}});
+}
+function finish(){
+  var g=DECKS[st.deck],shared=0;
+  st.cards.forEach(function(c,n){var a=c.querySelector('textarea').value.trim();if(a){shared++;st.log.push({d:g.name,q:g.qs[n],a:a})}});
+  $('r-title').textContent=shared+" of "+g.qs.length+" stories shared";
+  $('r-msg').textContent=shared==g.qs.length?"No skips. Respect. Admin is gripped 👀":shared>0?"Mysterious. We love a selective storyteller 😌":"All skips? Bold. Playing it safe 😂";
+  $('fact-t').textContent=g.fact;
+  $('fact-next').textContent=st.round<2?"Go to Round 2 →":"Finish →";
+  show('s-fact');
+}
+$('fact-next').onclick=function(){if(st.round<2)startRound();else endScreen()};
+
+var WANTS=["Airtime 📱","Data bundles","A shoutout","A chat 💬","A rematch","Just vibes ✨"],picked=[];
+function endScreen(){
+  $('e-score').textContent=st.log.length+" stories ready to send to Admin.";
+  var c=$('chips');c.innerHTML="";
+  WANTS.forEach(function(w){var b=document.createElement('button');b.className="chip";b.textContent=w;
+    b.onclick=function(){var k=picked.indexOf(w);if(k<0){picked.push(w);b.classList.add('on')}else{picked.splice(k,1);b.classList.remove('on')}};c.appendChild(b)});
+  show('s-end');
+}
+$('r-send').onclick=function(){
+  var m="Admin, I finished your game! 🎴\nFrom: "+st.name+"\nI call you: "+st.nick+"\nI know you as: "+st.rel+"\nWhat I know about you: "+(st.know||"-")+"\n";
+  var last="";
+  st.log.forEach(function(x){if(x.d!==last){m+="\n*"+x.d+"*\n";last=x.d}m+="Q: "+x.q+"\nA: "+x.a+"\n\n"});
+  m+="Favourite music star: "+($('e-music').value.trim()||"-")+"\nKES 3,000 ticket: scored "+qsc+" / "+QZ.length+(qsc==QZ.length?" (WINNER!)":"")+"\nWhat I'd like from you: "+(picked.join(", ")||"surprise me");
+  var more=$('e-more').value.trim();if(more)m+="\nNote: "+more;
+  wa(m);
+};
+
+var QZ=[
+ ["In which month was Admin born?",["March","July","November","December"],2],
+ ["In which year was Admin born?",["2001","2002","2003","2004"],2],
+ ["What is Admin's favourite food?",["Chips kuku","Steak","Pilau","Pizza"],1],
+ ["Which pet is Admin's favourite?",["Cat","Dog","Parrot","Rabbit"],1],
+ ["Which country has the most time zones, counting overseas territories?",["Russia","USA","China","France"],3],
+ ["Which UN member country has the smallest land area?",["Nauru","Monaco","San Marino","Tuvalu"],1],
+ ["Which metal has the highest melting point?",["Osmium","Platinum","Tungsten","Titanium"],2]];
+var qsc=0;
+var qc=[],qi=0;
+function lay(cs,cur){cs.forEach(function(c,i){var o=i-cur;c.style.pointerEvents=o==0?"auto":"none";
+ if(o<0){c.style.transform="translateX(-130%) rotate(-14deg)";c.style.opacity=0}
+ else if(o==0){c.style.transform="none";c.style.opacity=1;c.style.zIndex=10}
+ else if(o<3){c.style.transform="translateY("+o*14+"px) scale("+(1-o*.05)+") rotate("+(o%2?2:-2)+"deg)";c.style.opacity=1;c.style.zIndex=10-o}
+ else{c.style.opacity=0}})}
+$('e-go').onclick=function(){show('s-ticket')};
+$('t-go').onclick=function(){
+  var d=$('qdeck');d.innerHTML="";qc=[];qi=0;qsc=0;
+  QZ.forEach(function(q,n){var c=document.createElement('div');c.className="q glass";
+    c.innerHTML='<span class="tag" style="background:#7b4dff">🎟️ PRIZE CARD '+(n+1)+' / '+QZ.length+'</span><div class="qt"></div>';
+    c.querySelector('.qt').textContent=q[0];
+    q[1].forEach(function(o){var b=document.createElement('button');b.className="opt";b.textContent=o;b.onclick=function(){pickA(c,b)};c.appendChild(b)});
+    var s=document.createElement('div');s.className="note";s.style.marginTop="auto";c.appendChild(s);
+    d.appendChild(c);qc.push(c)});
+  lay(qc,0);$('q-count').textContent="1 of "+QZ.length;show('s-quiz')};
+function pickA(c,b){
+  var n=qc.indexOf(c),k=Array.prototype.indexOf.call(c.querySelectorAll('.opt'),b),right=QZ[n][2]===k;
+  c.querySelectorAll('.opt').forEach(function(x){x.disabled=true});
+  var t=c.querySelector('.note');t.textContent="Checking… 🤔";if(right)qsc++;
+  setTimeout(function(){b.classList.add(right?'ok':'no');t.textContent=right?"Correct! ✅":"Wrong ❌"},900);
+  setTimeout(function(){qi++;lay(qc,qi);if(qi>=QZ.length)setTimeout(showResult,450);else $('q-count').textContent=(qi+1)+" of "+QZ.length},2000)}
+function showResult(){var n=QZ.length,won=qsc==n;
+  $('x-title').textContent=won?"You got all "+n+"! 🏆":qsc+" / "+n+" 😬";
+  $('x-msg').textContent=won?"Send your answers to Admin to claim your KES 3,000 chance.":"Better luck next time 🍀";show('s-result')}
+</script>
+</body></html>
